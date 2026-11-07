@@ -1,106 +1,81 @@
-# 🦊 frontend-template
+# Fernweh
 
-[![coverage](https://raw.githubusercontent.com/schlaufuchs26/frontend-template/badge/coverage.svg)](https://github.com/schlaufuchs26/frontend-template/actions/workflows/test.yml?query=branch%3Amain)
+Ein Land, zehn Hinweise, ein Punktekonto. Jeder Hinweis kostet Punkte, und
+genau die willst du behalten.
 
-Minimal [Bun](https://bun.sh) + TypeScript + React starter for static web projects. Ships to GitHub Pages, devs locally with HMR.
+Live: https://schlaufuchs26.github.io/fernweh/
 
-## Quick Start
+## Wie es läuft
+
+Acht Runden, jede mit einem versteckten Land. Zu Beginn jeder Runde steht nur
+der Kontinent da, geschenkt. Aus einem Konto von **1000 Punkten** kaufst du
+dir Hinweise: Postkarte, Währung, Flagge, Nationalgericht, Nachbarländer,
+Fläche, Einwohner, Export, Verkehr, Steckdose. Alle zehn zusammen kosten 1150,
+du kannst dir also nie alles leisten. Ein Tipp ist endgültig; ein falscher
+kostet 250 Punkte, vier falsche leeren das Konto und die Runde ist verloren.
+Wer richtig rät, behält, was übrig ist.
+
+Nach der Auflösung nennt das Spiel einen Fakt zum Land und zeigt die Hinweise,
+die du nicht gekauft hast. So lernt man auch aus einer verlorenen Runde etwas.
+
+## Zwei Wege zum Ziel (mindestens einer ohne Fachwissen)
+
+1. **Die Postkarte lesen; ohne Vorwissen.** Sie ist in der Landessprache und
+   -schrift geschrieben. Wer keine Sprache der Welt spricht, erkennt trotzdem
+   die Schrift: lateinisch, kyrillisch, arabisch, Devanagari, Hangul, Thai,
+   Han. Danach tragen die Sonderzeichen: `¿` und `¡` heißt Spanisch, `ã` und
+   `ç` Portugiesisch, `ạ` Vietnamesisch, `ł` und `ę` Polnisch, `ø` Norwegisch
+   oder Dänisch. Einstieg: Postkarte kaufen, Schrift bestimmen, dann die
+   Sprachgruppe eingrenzen. Die Postkarte ist absichtlich teuer (260) und
+   absichtlich mehrdeutig: fünf Länder im Pool schreiben Spanisch, zwei
+   Portugiesisch, vier Englisch.
+2. **Alltagsspuren; ohne Vorwissen.** Steckdose, Verkehr, Währung und
+   Nationalgericht sind billig und geografisch eindeutig. Linksverkehr plus
+   Typ G deutet auf ein ehemaliges britisches Land, Typ A/B mit 127 V auf
+   Nordamerika, Typ I auf Australien, Argentinien oder China. Ein Gericht mit
+   Mais, Bohnen und Kakao führt nach Amerika, Fisch mit Skyr nach Island.
+   Einstieg: zwei, drei billige Hinweise kaufen und Kontinent plus Region
+   festnageln, statt sofort zu raten.
+3. **Zahlen und Handel; Fachwissen, aber nicht nötig.** Nachbarzahl, Fläche,
+   Einwohner und Exporte beschreiben eine Volkswirtschaft. Wer weiß, dass
+   Chile Kupfer und Neuseeland Milchpulver exportiert, spart sich die
+   Postkarte. Diese Route ist die schnellste für Geografie-Kenner und die
+   langsamste für alle anderen.
+
+Die vierte Route ist das Konto selbst: Du musst nicht wissen, welches Land es
+ist, sondern nur, wann du sicher genug bist. Ein Sieg mit 300 übrigen Punkten
+ist besser als ein Sieg mit 100.
+
+## Was das Spiel nicht ist
+
+- Keine Street-View-Kopie: es gibt keine Karte, keinen Pin, kein Foto.
+- Kein Globle oder Countryle: keine Nähe-Rückmeldung, kein Raten ohne Kosten.
+- Kein Quiz: Hinweise haben Preise, und falsch raten kostet. Die Entscheidung
+  ist, wann man aufhört zu kaufen.
+
+Die Flagge wird als Text beschrieben, nicht gezeichnet. Ein gezeichnetes Bild
+wäre für jeden Flaggenkenner die Antwort in einem Blick; die Beschreibung
+zwingt zum Übersetzen und lässt die Runde länger offen.
+
+## Daten
+
+36 Länder im Antwortpool, alle Hinweise von Hand geschrieben. Flächen und
+Einwohnerzahlen sind gerundet (Stand 2024/25), Steckdosen und
+Nationalgerichte sind die landesüblichen, nicht die einzigen. Fehler bitte als
+Issue melden; die Datei `src/data/countries.ts` ist die einzige Quelle.
+
+## Entwicklung
 
 ```bash
-curl -fsSL https://bun.sh/install | bash  # if you haven't already
-
-git clone https://github.com/schlaufuchs26/frontend-template.git
-cd frontend-template
 bun install
-bun dev
+bun index.html        # Dev-Server
+bun test              # Regeln, Daten und Komponenten
+bun run checks        # Format, tsc, Biome, Knip, Tests
+bun run build         # statisches Bundle nach dist/
+bun run test:e2e      # Playwright gegen den Dev-Server
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
-
-## Structure
-
-```
-index.html          — entry point for dev server and production build
-frontend.tsx         — React app (TSX)
-package.json        — React 19 + dev tooling
-tsconfig.json       — strict TS, ESNext
-bunfig.toml         — test preload + coverage thresholds
-biome.json          — formatter + linter config
-knip.json           — dead code detection
-playwright.config.ts — browser-test config (dev-server, Chromium path)
-.githooks/          — pre-commit hook (runs bun run checks)
-.github/workflows/  — CI: test, e2e, lint, typecheck, deploy, dead code
-scripts/            — coverage report + badge generators
-tests/              — Happy DOM + Testing Library setup, component tests
-e2e/                — Playwright browser tests (real Chromium)
-```
-
-## Scripts
-
-| Command | What it does |
-|---|---|
-| `bun dev` | Dev server with HMR on :3000 |
-| `bun run build` | Bundle index.html → dist/ (minified, production React) |
-| `bun test` | Run tests |
-| `bun run test:e2e` | Browser tests in real Chromium (needs a browser) |
-| `bun run test:coverage` | Text coverage report |
-| `bun run test:ci` | Generate coverage/lcov.info for CI |
-| `bun run checks` | Format + typecheck + lint + dead code + tests |
-
-### Production build
-
-`bun run build` clears `dist/`, then bundles with `--minify` and pins
-`process.env.NODE_ENV="production"`. Both flags are required: without them
-React ships its development build, which for this template is 975 kB with
-prop-type checks and dev warnings instead of 186 kB (measured 2026-09-11,
-Bun 1.3.13). Verify a build with `grep -c "process.env" dist/*.js` (prints
-0 when the define applied); `tests/build.test.ts` runs the build and fails
-on dev-only code.
-
-## Deploy
-
-Push to `main` and GitHub Actions deploys to Pages automatically:
-
-- **Build:** `bun install && bun run build`
-- **Deploy:** `dist/` → `https://schlaufuchs26.github.io/frontend-template/`
-
-Manual trigger: Actions → Deploy to GitHub Pages → Run workflow.
-
-## Testing
-
-Bun's built-in test runner + Happy DOM + Testing Library. Pre-configured in `bunfig.toml`. Tests auto-discover: `*.test.{ts,tsx}`, `*.spec.{ts,tsx}`.
-
-```bash
-bun test                   # run all tests
-bun run test:coverage      # text coverage report
-bun run test:ci            # generate coverage/lcov.info
-bun test --watch           # watch mode
-```
-
-### Coverage
-
-Thresholds enforced at 80% lines/functions/statements. On every push to `main`, the workflow generates a badge and force-pushes it to the `badge` branch — a single orphan commit, no history clutter. PRs get a sticky comment with per-file coverage.
-
-### Browser tests (Playwright)
-
-`bun run test:e2e` drives real Chromium against the dev server:
-`playwright.config.ts` starts `bun index.html` on port 4173, and
-`e2e/smoke.playwright.ts` checks the app boots, the counter reacts to a real
-click, and the shell centers without overflowing a 1280x757 laptop viewport.
-happy-dom has no layout engine, so geometry regressions pass every unit test;
-this suite is where they get caught. When a project outgrows the template,
-keep the file's shape and replace the assertions with that project's layout
-contract.
-
-CI installs Playwright's Chromium (`bunx playwright install --with-deps
-chromium`). On a box that ships Chromium via nix, like the fuchs host, set
-`PLAYWRIGHT_CHROMIUM_PATH` or rely on the default
-`/home/exedev/.nix-profile/bin/chromium` when it exists. A failing run uploads
-its HTML report as a workflow artifact.
-
-## Philosophy
-
-- **Zero-config dev server.** `bun index.html` gives you HMR, TSX transpilation, SPA routing, and bundling with no setup.
-- **No framework lock-in.** Just React. Swap to Vue, Svelte, or vanilla — change `frontend.tsx` and go.
-- **HTML-first.** Same `index.html` is the dev entry point and the build entry point. No dual files, no glue code.
-- **Grows with you.** Start here, add Tailwind, shadcn, whatever. No scaffolding to undo.
+Aufbau: `src/data/` hält Hinweise, Länder und die Rate-Liste, `src/game/engine.ts`
+die Regeln (reine Funktionen, ohne DOM), `src/components/` die Oberfläche,
+`frontend.tsx` den Spielzustand. Gebaut mit Bun, React 19 und TypeScript, ohne
+weitere Abhängigkeiten.

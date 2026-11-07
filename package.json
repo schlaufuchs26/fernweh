@@ -1,7 +1,7 @@
 {
-  "name": "frontend-template",
+  "name": "fernweh",
   "version": "0.1.0",
-  "description": "Minimal Bun + TypeScript + React template for web projects",
+  "description": "Fernweh: guess the country from bought clues, with a point budget",
   "type": "module",
   "scripts": {
     "dev": "bun index.html",
